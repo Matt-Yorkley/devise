@@ -72,7 +72,7 @@ module Devise
 
       flash.now[:alert] = i18n_message(:invalid) if is_flashing_format?
       response_from_app = recall_app(warden_options[:recall]).call(request.env)
-      response_from_app[0] = recall_response_code(response_from_app[0])
+      response_from_app[0] = Devise.recall_response_code
       self.response = response_from_app
     end
 
@@ -90,10 +90,6 @@ module Devise
     end
 
   protected
-
-    def recall_response_code(_original_response_code)
-      422
-    end
 
     def i18n_options(options)
       options

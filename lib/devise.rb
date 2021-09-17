@@ -219,6 +219,9 @@ module Devise
   mattr_accessor :navigational_formats
   @@navigational_formats = ["*/*", :html, :turbo_stream]
 
+  # Status code for recall responses
+  mattr_accessor :recall_response_code, default: 200
+
   # When set to true, signing out a user signs out all other scopes.
   mattr_accessor :sign_out_all_scopes
   @@sign_out_all_scopes = true

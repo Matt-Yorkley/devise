@@ -19,7 +19,7 @@ class SessionsControllerTest < Devise::ControllerTestCase
           password: "wrongpassword"
         }
       }
-      assert_equal 422, @response.status
+      assert_equal 200, @response.status
     ensure
       ActiveSupport::Notifications.unsubscribe(subscriber)
     end
@@ -29,7 +29,7 @@ class SessionsControllerTest < Devise::ControllerTestCase
     swap Devise, scoped_views: true do
       request.env["devise.mapping"] = Devise.mappings[:user]
       post :create
-      assert_equal 422, @response.status
+      assert_equal 200, @response.status
       assert_template "users/sessions/new"
     end
   end
@@ -70,8 +70,20 @@ class SessionsControllerTest < Devise::ControllerTestCase
         password: "wevdude"
       }
     }
-    assert_equal 422, @response.status
+    assert_equal 200, @response.status
     assert_template "devise/sessions/new"
+  end
+
+  test "#create failures return an alternate response code if one is configured" do
+    swap Devise, recall_response_code: 422 do
+      request.env["devise.mapping"] = Devise.mappings[:user]
+      post :create, params: { user: {
+        email: "nosuchuser@example.com",
+        password: "wevdude"
+      }
+      }
+      assert_equal 422, @response.status
+    end
   end
 
   test "#destroy doesn't set the flash if the requested format is not navigational" do

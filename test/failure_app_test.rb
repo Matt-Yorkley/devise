@@ -337,7 +337,7 @@ class FailureTest < ActiveSupport::TestCase
         "warden" => stub_everything
       }
       call_failure(env)
-      assert_equal 422, @response.first
+      assert_equal 200, @response.first
       assert_includes @response.third.body, '<h2>Log in</h2>'
       assert_includes @response.third.body, 'Invalid Email or password.'
     end
@@ -349,7 +349,7 @@ class FailureTest < ActiveSupport::TestCase
         "warden" => stub_everything
       }
       call_failure(env)
-      assert_equal 422, @response.first
+      assert_equal 200, @response.first
       assert_includes @response.third.body, '<h2>Log in</h2>'
       assert_includes @response.third.body, 'You have to confirm your email address before continuing.'
     end
@@ -361,7 +361,7 @@ class FailureTest < ActiveSupport::TestCase
         "warden" => stub_everything
       }
       call_failure(env)
-      assert_equal 422, @response.first
+      assert_equal 200, @response.first
       assert_includes @response.third.body, '<h2>Log in</h2>'
       assert_includes @response.third.body, 'Your account is not activated yet.'
     end
@@ -375,7 +375,7 @@ class FailureTest < ActiveSupport::TestCase
             "warden" => stub_everything
           }
           call_failure(env)
-          assert_equal 422, @response.first
+          assert_equal 200, @response.first
           assert_includes @response.third.body, '<h2>Log in</h2>'
           assert_includes @response.third.body, 'Invalid Email or password.'
           assert_equal '/sample', @request.env["SCRIPT_NAME"]
